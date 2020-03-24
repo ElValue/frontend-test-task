@@ -5,38 +5,39 @@
         <router-view/>
       </div>
     </transition>
+    <error></error>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-property-decorator'
+import Error from '@/components/error.vue'
+import { Component, Vue } from 'vue-property-decorator'
 
+@Component({
+  components: {
+    Error
+  }
+})
 export default class App extends Vue {}
 </script>
 
 <style>
+html, body, #app {
+  height: 100%;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
+  padding-top: 60px;
+  position: relative;
+  background-color: #e2e2e2;
 }
 * {
   box-sizing: border-box;
 }
-.container {
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-.br {
-  border-radius: 4px;
-}
-.border {
-  border: 1px solid #cdcaca;
-}
+
 /*toggle animation components*/
 .slide-fade-enter-active {
   transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
