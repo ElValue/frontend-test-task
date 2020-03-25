@@ -20,6 +20,5 @@ export default class App extends Vue {}
     bottom: 0;
     left: 0;
     right: 0;
-    max-width: 40%;
   }
 </style>

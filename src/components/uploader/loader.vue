@@ -1,7 +1,7 @@
 <template>
   <div class="uploader__title">
     <input @change="loadFile($event)" type="file" name="file" id="file" class="inputFile" :accept="projectFormat"/>
-    <p>Drop files here or <label  class="text-primary text-decoration" for="file">Browse</label> to upload</p>
+    <p>Upload a <label  class="text-primary text-decoration" for="file">JSON</label> format project file</p>
     <button @click="$emit('toggleComponent', 'save-projects')">ASd</button>
   </div>
 </template>

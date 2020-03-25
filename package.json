@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "inspect": "vue-cli-service inspect"
+    "inspect": "vue-cli-service inspect --mode development"
   },
   "dependencies": {
     "bootstrap": "^4.4.1",
@@ -38,6 +38,8 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.1.2",
     "typescript": "~3.7.5",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "vuex-class": "^0.3.2",
+    "vuex-module-decorators": "^0.16.1"
   }
 }

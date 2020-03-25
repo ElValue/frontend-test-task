@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="slide-fade" mode="out-in">
-      <div class="container br border">
+      <div class="container border text-center">
         <router-view/>
       </div>
     </transition>
