@@ -1,30 +1,26 @@
 <template>
   <div>
-    <transition name="slide-fade" mode="out-in">
-      <component
-        :is="currentComponent"
-        @toggleComponent="toggleComponent"
-      ></component>
-    </transition>
+    <loader @fetchFile="fetchFile"></loader>
   </div>
 </template>
 
 <script lang="ts">
 import Loader from '@/components/uploader/loader.vue'
-import SaveProjects from '@/components/uploader/save-projects.vue'
 import { Component, Emit, Vue } from 'vue-property-decorator'
 
 @Component({
   components: {
-    Loader,
-    SaveProjects
+    Loader
   }
 })
 export default class Uploader extends Vue {
-  private currentComponent = 'loader'
-  @Emit('toggleComponent')
-  toggleComponent (component: string): void {
-    this.currentComponent = component
+  @Emit('fetchFile')
+  fetchFile ({ fileName, taskList }: { fileName: string; taskList: [] }): void {
+    this.$store.commit('project/saveToStorage', {
+      name: fileName,
+      taskList
+    })
+    this.$router.push({ name: 'Project', query: { name: fileName } })
   }
 }
 </script>

@@ -1,23 +1,42 @@
 <template>
   <div>
-    <h1>{{name}}</h1>
+    <h1>Project</h1>
+    {{name}}
+    {{taskList}}
+<!--    <h1>{{name}}</h1>-->
+<!--    <h1>{{taskList}}</h1>-->
   </div>
 </template>
 
 <script lang="ts">
-import List from '@/components/project/list.vue'
 import { Component, Vue } from 'vue-property-decorator'
+import store from '@/store'
 import { namespace } from 'vuex-class'
-const project = namespace('Project')
+const project = namespace('project')
 
-@Component({
-  components: {
-    List
-  }
-})
+Component.registerHooks([
+  'beforeRouteEnter'
+])
+
+@Component
 export default class Project extends Vue {
   @project.State
   public name!: string
+
+  @project.State
+  private taskList!: []
+
+  async beforeRouteEnter (to: any, from: any, next: any) {
+    const projectName = to.query.name
+    if (typeof projectName === 'undefined') {
+      next('/')
+    }
+    await store.dispatch('project/search', { name: projectName })
+    if (store.state.project.name !== projectName) {
+      next('/')
+    }
+    next()
+  }
 }
 </script>
 

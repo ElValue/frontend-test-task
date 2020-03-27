@@ -2,52 +2,60 @@
   <div class="uploader__title">
     <input @change="loadFile($event)" type="file" name="file" id="file" class="inputFile" :accept="projectFormat"/>
     <p>Upload a <label  class="text-primary text-decoration" for="file">JSON</label> format project file</p>
-    <button @click="$emit('toggleComponent', 'save-projects')">ASd</button>
+<!--    <button @click="$emit('toggleComponent', 'save-projects')">ASd</button>-->
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-interface TaskList {
-  taskList: [];
-}
-interface Task {
-  name: string;
-  description: string;
-  mark: boolean;
-}
+import { Task, TaskList } from '@/store/models.d.ts'
+
 @Component
 export default class Loader extends Vue {
-  private projectFormat = 'application/json'
-  public async loadFile (e: any) {
+  private readonly projectFormat = 'application/json'
+
+  private async loadFile (e: any): Promise<void> {
+    const file = e.target.files[0]
+    if (!this.checkFormatFile(file)) {
+      this.throwError(`Invalid file format, try ${this.projectFormat}`)
+      return
+    }
+    const data = await this.parseFile(file)
+    if (data == null) {
+      return
+    }
+    this.$emit('fetchFile', {
+      fileName: file.name,
+      ...data
+    })
+    // await this.$router.push({ name: 'Project' })
+  }
+
+  private async parseFile (file: Blob): Promise<{taskList: []} | null> {
     try {
-      const file = e.target.files[0]
-      const fileData = await this.readFile(file)
-      const data = JSON.parse(fileData)
+      const jsonString = await this.readFile(file)
+      const data = JSON.parse(jsonString)
       if (!this.checkValidTaskList(data)) {
         this.throwError('Invalid structure')
-        return
+        return null
       }
       if (this.isHasTasks(data.taskList) && !this.isValidTasks(data.taskList)) {
         this.throwError('Invalid structure')
-        return
+        return null
       }
-      console.log('Valid json')
+      return { taskList: data.taskList }
     } catch (e) {
       console.error(e)
       this.throwError('Failed to parse JSON file, please check correct structure')
+      return null
     }
   }
 
-  public checkValidTaskList (arg: TaskList): boolean {
-    return arg && 'taskList' in arg && Array.isArray(arg.taskList)
+  private checkFormatFile (file: Blob): boolean {
+    return file.type === this.projectFormat
   }
 
-  public isHasTasks (list: []): boolean {
-    return Object.keys(list).length > 0
-  }
-
-  public isValidTasks (taskList: []): boolean {
+  private isValidTasks (taskList: []): boolean {
     for (const task of taskList) {
       if (!this.checkTask(task)) {
         return false
@@ -56,20 +64,11 @@ export default class Loader extends Vue {
     return true
   }
 
-  public checkTask (task: Task): boolean {
-    if (task) {
-      return ('name' in task && typeof task.name === 'string') &&
-        ('description' in task && typeof task.description === 'string') &&
-        ('mark' in task && typeof task.mark === 'boolean')
-    }
-    return false
-  }
-
-  public throwError (message: string): void {
+  private throwError (message: string): void {
     this.$store.commit('toggleError', { show: true, message })
   }
 
-  public readFile (file: Blob): Promise<string> {
+  private readFile (file: Blob): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader()
       reader.readAsText(file)
@@ -81,6 +80,23 @@ export default class Loader extends Vue {
       }
       reader.onerror = error => reject(error)
     })
+  }
+
+  public checkValidTaskList (arg: TaskList): boolean {
+    return arg && 'taskList' in arg && Array.isArray(arg.taskList)
+  }
+
+  public isHasTasks (list: []): boolean {
+    return Object.keys(list).length > 0
+  }
+
+  public checkTask (task: Task): boolean {
+    if (task) {
+      return ('name' in task && typeof task.name === 'string') &&
+        ('description' in task && typeof task.description === 'string') &&
+        ('mark' in task && typeof task.mark === 'boolean')
+    }
+    return false
   }
 }
 </script>

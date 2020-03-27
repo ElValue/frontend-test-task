@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Project from './modules/project'
+import { getModule } from 'vuex-module-decorators'
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     error: {
       show: false,
@@ -19,6 +20,8 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    Project
+    project: Project
   }
 })
+export default store
+export const projectModule = getModule(Project, store)

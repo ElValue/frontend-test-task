@@ -1,19 +1,28 @@
-// store/modules/user.ts
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
+import { getItemFromSessionStorage, setItemToSessionStorage } from '@/utils/session.service'
 
 @Module({ namespaced: true, name: 'Project' })
 
 class Project extends VuexModule {
-  public name = 'Test'
+  public name = ''
+  public taskList = []
 
   @Mutation
-  public setName (newName: string): void {
-    this.name = newName
+  public save ({ name, taskList }: { name: string; taskList: [] }): void {
+    this.name = name
+    this.taskList = taskList
+  }
+
+  @Mutation saveToStorage ({ name, taskList }: { name: string; taskList: [] }): void {
+    setItemToSessionStorage(name, taskList)
   }
 
   @Action
-  public updateName (newName: string): void {
-    // this.context.commit('setName', newName)
+  public search ({ name, taskList }: { name: string; taskList: [] }): any {
+    const project = getItemFromSessionStorage(name)
+    if (project !== null) {
+      this.context.commit('save', { name, taskList: project.data })
+    }
   }
 }
 export default Project
