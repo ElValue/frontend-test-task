@@ -37,6 +37,9 @@ html, body, #app {
 * {
   box-sizing: border-box;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 
 /*toggle animation components*/
 .slide-fade-enter-active {

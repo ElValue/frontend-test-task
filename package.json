@@ -9,6 +9,7 @@
     "inspect": "vue-cli-service inspect --mode development"
   },
   "dependencies": {
+    "@types/vuedraggable": "^2.23.0",
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.4",
     "jquery": "^3.4.1",
