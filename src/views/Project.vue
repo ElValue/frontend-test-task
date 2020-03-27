@@ -13,7 +13,9 @@
         @customAction="toggleVisible"
       ></change-text>
     </div>
-    <task-list :taskList="taskList"></task-list>
+    <div class="row justify-content-center">
+      <task-list :taskList="taskList" class="col col-md-12"></task-list>
+    </div>
   </div>
 </template>
 

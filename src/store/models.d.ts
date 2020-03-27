@@ -6,4 +6,5 @@ export interface ITask {
   name: string;
   description: string;
   mark: boolean;
+  nested: ITask[]
 }
