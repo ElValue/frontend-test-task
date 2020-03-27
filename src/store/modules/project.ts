@@ -9,9 +9,13 @@ class Project extends VuexModule implements IProject {
   public taskList: IProject['taskList'] = []
 
   @Mutation
-  private save ({ name, taskList }: IProject): void {
-    this.name = name
+  private updateTaskList (taskList: IProject['taskList']): void {
     this.taskList = taskList
+  }
+
+  @Mutation
+  public updateName (name: IProject['name']): void {
+    this.name = name
   }
 
   @Mutation
@@ -23,7 +27,8 @@ class Project extends VuexModule implements IProject {
   public search ({ name }: { name: string }): any {
     const project = getItemFromSessionStorage(name)
     if (project !== null) {
-      this.context.commit('save', { name, taskList: project.data })
+      this.context.commit('updateName', name)
+      this.context.commit('updateTaskList', project.data)
     }
   }
 }
