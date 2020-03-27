@@ -1,17 +1,15 @@
 <template>
-  <div>
-    <loader @fetchFile="fetchFile"></loader>
-  </div>
+  <input-loader @fetchFile="fetchFile"></input-loader>
 </template>
 
 <script lang="ts">
-import Loader from '@/components/uploader/loader.vue'
+import InputLoader from '@/components/loader/input.vue'
 import { Component, Emit, Vue } from 'vue-property-decorator'
 import { ITask } from '@/store/models'
 
 @Component({
   components: {
-    Loader
+    InputLoader
   }
 })
 export default class Uploader extends Vue {

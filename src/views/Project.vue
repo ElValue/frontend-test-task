@@ -3,8 +3,6 @@
     <h1>Project</h1>
     {{name}}
     {{taskList}}
-<!--    <h1>{{name}}</h1>-->
-<!--    <h1>{{taskList}}</h1>-->
   </div>
 </template>
 

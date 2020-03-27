@@ -11,7 +11,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { IProject, ITask } from '@/store/models.d.ts'
 
 @Component
-export default class Loader extends Vue {
+export default class Input extends Vue {
   private readonly projectFormat = 'application/json'
 
   private async loadFile (e: any): Promise<void> {
