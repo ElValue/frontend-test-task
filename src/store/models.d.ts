@@ -1,8 +1,9 @@
-export interface Task {
+export interface IProject {
+  name: string;
+  taskList: ITask[];
+}
+export interface ITask {
   name: string;
   description: string;
   mark: boolean;
-}
-export interface TaskList {
-  taskList: Task[];
 }

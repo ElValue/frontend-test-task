@@ -1,4 +1,6 @@
-export const getItemFromSessionStorage = (key: string): { key: string; data: [] } | null => {
+import { ITask } from '@/store/models'
+
+export const getItemFromSessionStorage = (key: string): { key: string; data: ITask[] } | null => {
   const item = window.sessionStorage.getItem(key)
   if (item !== null) {
     return { key, data: JSON.parse(item) }
@@ -8,7 +10,7 @@ export const getItemFromSessionStorage = (key: string): { key: string; data: [] 
 export const destroyItemFromSessionStorage = (key: string): void => {
   window.sessionStorage.removeItem(key)
 }
-export const setItemToSessionStorage = (key: string, data: string | []): void => {
+export const setItemToSessionStorage = (key: string, data: ITask[]): void => {
   window.sessionStorage.setItem(key, JSON.stringify(data))
 }
 export default {

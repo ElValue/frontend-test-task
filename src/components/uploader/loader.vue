@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Task, TaskList } from '@/store/models.d.ts'
+import { IProject, ITask } from '@/store/models.d.ts'
 
 @Component
 export default class Loader extends Vue {
@@ -28,10 +28,9 @@ export default class Loader extends Vue {
       fileName: file.name,
       ...data
     })
-    // await this.$router.push({ name: 'Project' })
   }
 
-  private async parseFile (file: Blob): Promise<{taskList: []} | null> {
+  private async parseFile (file: Blob): Promise<{taskList: ITask[]} | null> {
     try {
       const jsonString = await this.readFile(file)
       const data = JSON.parse(jsonString)
@@ -82,7 +81,7 @@ export default class Loader extends Vue {
     })
   }
 
-  public checkValidTaskList (arg: TaskList): boolean {
+  public checkValidTaskList (arg: IProject): boolean {
     return arg && 'taskList' in arg && Array.isArray(arg.taskList)
   }
 
@@ -90,7 +89,7 @@ export default class Loader extends Vue {
     return Object.keys(list).length > 0
   }
 
-  public checkTask (task: Task): boolean {
+  public checkTask (task: ITask): boolean {
     if (task) {
       return ('name' in task && typeof task.name === 'string') &&
         ('description' in task && typeof task.description === 'string') &&

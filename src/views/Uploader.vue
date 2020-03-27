@@ -7,6 +7,7 @@
 <script lang="ts">
 import Loader from '@/components/uploader/loader.vue'
 import { Component, Emit, Vue } from 'vue-property-decorator'
+import { ITask } from '@/store/models'
 
 @Component({
   components: {
@@ -15,7 +16,7 @@ import { Component, Emit, Vue } from 'vue-property-decorator'
 })
 export default class Uploader extends Vue {
   @Emit('fetchFile')
-  fetchFile ({ fileName, taskList }: { fileName: string; taskList: [] }): void {
+  fetchFile ({ fileName, taskList }: { fileName: string; taskList: ITask[] }): void {
     this.$store.commit('project/saveToStorage', {
       name: fileName,
       taskList
