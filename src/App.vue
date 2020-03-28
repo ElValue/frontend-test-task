@@ -24,6 +24,7 @@ export default class App extends Vue {}
 <style>
 html, body, #app {
   height: 100%;
+  background-color: #e2e2e2;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -32,10 +33,6 @@ html, body, #app {
   color: #2c3e50;
   padding-top: 60px;
   position: relative;
-  background-color: #e2e2e2;
-}
-* {
-  box-sizing: border-box;
 }
 .cursor-pointer {
   cursor: pointer;
