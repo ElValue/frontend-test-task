@@ -15,7 +15,11 @@ class Project extends VuexModule implements IProject {
 
   @Mutation
   public updateName (name: IProject['name']): void {
+    const url = new URL(window.location.href)
+    url.searchParams.set('name', name)
     this.name = name
+    // @ts-ignore
+    window.history.pushState(null, '', url)
   }
 
   @Mutation
