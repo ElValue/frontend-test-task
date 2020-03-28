@@ -10,7 +10,20 @@
          class="card cursor-pointer mb-5 text-left"
     >
       <div class="card-header d-flex justify-content-between">
-        <h4>{{task.name}}</h4>
+        <div>
+<!--          <h4-->
+<!--            v-if="!task.isChangeName"-->
+<!--            @click="task.isChangeName = !task.isChangeName"-->
+<!--          >-->
+<!--            {{task.name}}-->
+<!--          </h4>-->
+<!--          <change-text-->
+<!--            v-else-->
+<!--            :text="task.name"-->
+<!--            @updateText="updateName"-->
+<!--            @customAction="toggleVisible"-->
+<!--          ></change-text>-->
+        </div>
         <button @click="$emit('destroyTask', { index: i, taskList })" type="button" class="btn btn btn-secondary btn-sm font-weight-bold">&times;</button>
       </div>
       <div class="card-body">
@@ -37,13 +50,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { IProject } from '@/store/models'
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
+import ChangeText from '@/components/project/change-text.vue'
+import { ITask } from '@/store/models'
 import Draggable from 'vuedraggable'
 
 @Component({
   components: {
-    Draggable
+    Draggable,
+    ChangeText
   },
   filters: {
     markFlagFilter: function (markFlagText: string, mark: boolean): string {
@@ -56,7 +71,24 @@ export default class TaskList extends Vue {
   private readonly dropAreaSize = 80
   private markFlagText = 'Done'
   @Prop({ required: true, type: Array, default: [] })
-  taskList!: IProject['taskList']
+  taskList!: ITask[]
+
+  @Emit('customAction')
+  toggleVisible (index: number): void {
+    // this.taskAction[index].isChangeName = false
+    console.log(index)
+  }
+
+  @Emit('updateText')
+  updateName (text: string): void {
+    console.log(text)
+  }
+
+  created () {
+    // this.taskList.forEach(task => {
+    //   task.isChangeName = false
+    // })
+  }
 }
 </script>
 

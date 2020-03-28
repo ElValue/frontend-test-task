@@ -1,7 +1,7 @@
 <template>
   <div class="text-center align-items-center">
     <div class="mb-4 row">
-      <div class="col-6 text-left">
+      <div class="col-6 col-sm-12 col-md-6 text-left">
         <h1
           v-if="!isChangeName"
           @click="isChangeName = !isChangeName"
@@ -10,11 +10,11 @@
         <change-text
           v-else
           :text="name"
-          @updateText="fetchFile"
+          @updateText="updateName"
           @customAction="toggleVisible"
         ></change-text>
       </div>
-      <div class="col-6 text-left">
+      <div class="col-6 col-sm-12 col-md-6 text-left">
         <task-add @addTask="addTask"></task-add>
 <!--        <input type="text" class="form-control" placeholder="Please enter task name">-->
 <!--        <button type="button" class="btn btn-primary btn-sm">Add task</button>-->
@@ -58,7 +58,7 @@ export default class Project extends Vue {
   private isChangeName = false
 
   @Emit('updateText')
-  fetchFile (text: string): void {
+  updateName (text: string): void {
     this.$store.commit('project/updateName', text)
   }
 

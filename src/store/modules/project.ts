@@ -1,5 +1,5 @@
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
-import { getItemFromSessionStorage, setItemToSessionStorage } from '@/utils/session.service'
+import { keyNameForSave, getItemFromSessionStorage, setItemToSessionStorage } from '@/utils/session.service'
 import { IProject } from '@/store/models.d.ts'
 
 @Module({ namespaced: true, name: 'Project' })
@@ -19,16 +19,16 @@ class Project extends VuexModule implements IProject {
   }
 
   @Mutation
-  public saveToStorage ({ name, taskList }: IProject): void {
-    setItemToSessionStorage(name, taskList)
+  public saveToStorage (project: IProject[]): void {
+    setItemToSessionStorage(keyNameForSave, project)
   }
 
   @Action
   public search ({ name }: { name: string }): any {
-    const project = getItemFromSessionStorage(name)
+    const project = getItemFromSessionStorage(keyNameForSave)
     if (project !== null) {
-      this.context.commit('updateName', name)
-      this.context.commit('updateTaskList', project.data)
+      this.context.commit('updateName', project.data.name)
+      this.context.commit('updateTaskList', project.data.taskList)
     }
   }
 }
