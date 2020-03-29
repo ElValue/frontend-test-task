@@ -13,6 +13,11 @@
 </template>
 
 <script lang="ts">
+/**
+ * This component is designed to create tasks.
+ * @emits { Object } addTask
+ * */
+
 import { Component, Vue } from 'vue-property-decorator'
 import { ITask } from '@/store/models'
 

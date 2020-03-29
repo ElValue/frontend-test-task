@@ -8,6 +8,10 @@
 </template>
 
 <script lang="ts">
+/**
+ * This component is designed to display errors.
+ */
+
 import { Vue } from 'vue-property-decorator'
 
 export default class App extends Vue {}

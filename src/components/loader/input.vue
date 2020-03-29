@@ -6,6 +6,13 @@
 </template>
 
 <script lang="ts">
+/**
+ * This component is designed to load custom files, supported file format - JSON
+ * After the file is upload, the file structure will be checked,and if structure is not a valid, an error will appear
+ * File structure you can find in the file /src/store/models.d.ts [IProject, ITask]
+ *
+ */
+
 import { Component, Vue } from 'vue-property-decorator'
 import { IProject, ITask } from '@/store/models.d.ts'
 

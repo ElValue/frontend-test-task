@@ -36,6 +36,11 @@
 </template>
 
 <script lang="ts">
+/**
+ * This component contains all the components that are designed to interact with the project.
+ * Component is the entry point for router Project
+ */
+
 import { Component, Emit, Vue } from 'vue-property-decorator'
 import store from '@/store'
 import { namespace } from 'vuex-class'

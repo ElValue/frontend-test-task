@@ -37,6 +37,13 @@
 </template>
 
 <script lang="ts">
+/**
+ * This component is designed to display tasks list.
+ * It also has a nested same component that recursively displays nested tasks
+ * Due to the dependency vuedraggable, the user may use Drag end drop and move tasks to a nested list with potentially infinite depth
+ * @param { Array } taskList
+ * */
+
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import ChangeText from '@/components/project/change-text.vue'
 import { ITask } from '@/store/models'

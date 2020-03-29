@@ -6,6 +6,11 @@
 </template>
 
 <script lang="ts">
+/**
+ * This component contains all the components that are designed to interact with the file project.
+ * After the file is upload or the user selects interaction without a file, then the application will go to the project page
+ * Component is the entry point for router Uploader
+ */
 import InputLoader from '@/components/loader/input.vue'
 import { Component, Emit, Vue } from 'vue-property-decorator'
 import { ITask } from '@/store/models'

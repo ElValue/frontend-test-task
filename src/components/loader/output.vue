@@ -3,6 +3,14 @@
 </template>
 
 <script lang="ts">
+/**
+ * This component is designed to generate files.
+ * File structure you can find in the file /src/store/models.d.ts [IProject, ITask]
+ * @param {String} filename
+ * @param {String} formatFile
+ * @param {String} data
+ *
+ */
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
