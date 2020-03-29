@@ -2,27 +2,35 @@
   <div class="text-center align-items-center">
     <div class="mb-4 row">
       <div class="col-6 col-sm-12 col-md-6 text-left">
-        <h1
-          v-if="!isChangeName"
-          @click="isChangeName = !isChangeName"
-          class="cursor-pointer m-0 d-inline-block"
-        >{{name}}</h1>
-        <change-text
-          v-else
-          :text="name"
-          @updateText="updateName"
-          @customAction="toggleVisible"
-        ></change-text>
+        <div class="mb-3">
+          <h1
+            v-if="!isChangeName"
+            @click="isChangeName = !isChangeName"
+            class="cursor-pointer m-0 d-inline-block"
+          >{{name}}</h1>
+          <change-text
+            v-else
+            :text="name"
+            @updateText="updateName"
+            @customAction="toggleVisible"
+          ></change-text>
+        </div>
+        <loader-output
+          :filename="name"
+          :format-file="formatFileForExport"
+          :data="dataForExport"
+        ></loader-output>
       </div>
       <div class="col-6 col-sm-12 col-md-6 text-left">
         <task-add @addTask="addTask"></task-add>
-<!--        <input type="text" class="form-control" placeholder="Please enter task name">-->
-<!--        <button type="button" class="btn btn-primary btn-sm">Add task</button>-->
-<!--        <button type="button" class="btn btn-secondary btn-sm">Export</button>-->
       </div>
     </div>
     <div class="row justify-content-center">
-      <task-list @destroyTask="destroyTask" :taskList="taskList" class="col col-md-12"></task-list>
+      <task-list
+        @destroyTask="destroyTask"
+        :taskList="taskList"
+        class="col col-md-12"
+      ></task-list>
     </div>
   </div>
 </template>
@@ -34,7 +42,9 @@ import { namespace } from 'vuex-class'
 import ChangeText from '@/components/project/change-text.vue'
 import TaskList from '@/components/project/task-list.vue'
 import TaskAdd from '@/components/project/task-add.vue'
+import LoaderOutput from '@/components/loader/output.vue'
 import { ITask } from '@/store/models'
+
 const project = namespace('project')
 
 Component.registerHooks([
@@ -45,7 +55,8 @@ Component.registerHooks([
   components: {
     ChangeText,
     TaskList,
-    TaskAdd
+    TaskAdd,
+    LoaderOutput
   }
 })
 export default class Project extends Vue {
@@ -56,6 +67,11 @@ export default class Project extends Vue {
   private taskList!: ITask[]
 
   private isChangeName = false
+  private formatFileForExport = 'json'
+
+  get dataForExport () {
+    return JSON.stringify(this.taskList)
+  }
 
   @Emit('updateText')
   updateName (text: string): void {

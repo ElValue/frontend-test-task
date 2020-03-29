@@ -1,6 +1,6 @@
 <template>
   <draggable
-    :list="taskList"
+    v-model="taskList"
     :group="{ name: 'task-list' }"
     :empty-insert-threshold="dropAreaSize"
     class="dragArea"
@@ -10,20 +10,7 @@
          class="card cursor-pointer mb-5 text-left"
     >
       <div class="card-header d-flex justify-content-between">
-        <div>
-<!--          <h4-->
-<!--            v-if="!task.isChangeName"-->
-<!--            @click="task.isChangeName = !task.isChangeName"-->
-<!--          >-->
-<!--            {{task.name}}-->
-<!--          </h4>-->
-<!--          <change-text-->
-<!--            v-else-->
-<!--            :text="task.name"-->
-<!--            @updateText="updateName"-->
-<!--            @customAction="toggleVisible"-->
-<!--          ></change-text>-->
-        </div>
+        <h4>{{task.name}}</h4>
         <button @click="$emit('destroyTask', { index: i, taskList })" type="button" class="btn btn btn-secondary btn-sm font-weight-bold">&times;</button>
       </div>
       <div class="card-body">
@@ -42,7 +29,7 @@
       </div>
       <task-list
         @destroyTask="$listeners.destroyTask"
-        :taskList="task.nested"
+        :taskList="task.nestedTasks"
         class="ml-4 mr-4"
       ></task-list>
     </div>
@@ -50,10 +37,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import ChangeText from '@/components/project/change-text.vue'
 import { ITask } from '@/store/models'
 import Draggable from 'vuedraggable'
+
+interface IActionTask {
+  isChangeName: false;
+}
 
 @Component({
   components: {
@@ -70,25 +61,8 @@ import Draggable from 'vuedraggable'
 export default class TaskList extends Vue {
   private readonly dropAreaSize = 80
   private markFlagText = 'Done'
-  @Prop({ required: true, type: Array, default: [] })
+  @Prop({ required: true, type: Array })
   taskList!: ITask[]
-
-  @Emit('customAction')
-  toggleVisible (index: number): void {
-    // this.taskAction[index].isChangeName = false
-    console.log(index)
-  }
-
-  @Emit('updateText')
-  updateName (text: string): void {
-    console.log(text)
-  }
-
-  created () {
-    // this.taskList.forEach(task => {
-    //   task.isChangeName = false
-    // })
-  }
 }
 </script>
 

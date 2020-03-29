@@ -18,7 +18,7 @@ export const setItemToSessionStorage = (key: string, data: IProject[]): void => 
 export const beforeUnload = function (store: any, keyForSave: string, fn: Function): void | boolean {
   const data = store.state.project
   fn.call(null, keyForSave, data)
-  return true
+  // return true
 }
 export default {
   keyNameForSave,

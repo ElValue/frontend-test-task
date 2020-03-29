@@ -12,6 +12,7 @@ import { IProject, ITask } from '@/store/models.d.ts'
 @Component
 export default class Input extends Vue {
   private readonly projectFormat = 'application/json'
+  private readonly fileFormat = 'json'
 
   private async loadFile (e: any): Promise<void> {
     const file = e.target.files[0]
@@ -24,7 +25,7 @@ export default class Input extends Vue {
       return
     }
     this.$emit('fetchFile', {
-      fileName: file.name,
+      fileName: file.name.replace(`.${this.fileFormat}`, ''),
       ...data
     })
   }
@@ -92,7 +93,8 @@ export default class Input extends Vue {
     if (task) {
       return ('name' in task && typeof task.name === 'string') &&
         ('description' in task && typeof task.description === 'string') &&
-        ('mark' in task && typeof task.mark === 'boolean')
+        ('mark' in task && typeof task.mark === 'boolean') &&
+        ('nestedTasks' in task && Array.isArray(task.nestedTasks))
     }
     return false
   }

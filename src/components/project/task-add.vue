@@ -22,7 +22,7 @@ export default class TaskAdd extends Vue {
     name: '',
     description: '',
     mark: false,
-    nested: []
+    nestedTasks: []
   }
 
   private addTask () {
