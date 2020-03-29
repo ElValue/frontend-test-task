@@ -1,5 +1,8 @@
 <template>
-  <input-loader @fetchFile="fetchFile"></input-loader>
+  <div>
+    <input-loader @fetchFile="fetchFile"></input-loader>
+    <button class="btn btn-success" @click="fetchFile(defaultFileName)">Or continue without downloading</button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -13,6 +16,11 @@ import { ITask } from '@/store/models'
   }
 })
 export default class Uploader extends Vue {
+  private defaultFileName = {
+    fileName: 'defaultName',
+    taskList: []
+  }
+
   @Emit('fetchFile')
   fetchFile ({ fileName, taskList }: { fileName: string; taskList: ITask[] }): void {
     this.$store.commit('project/saveToStorage', {
